@@ -1,22 +1,80 @@
+# Single Element in a Sorted Array
+# You are given a sorted array consisting of only integers where
+# every element appears exactly twice, except for one element which
+# appears exactly once.
 
-# works okay, fairly slow and uses more memory than others' solutions
+# Return the single element that appears only once.
+
+# Your solution must run in O(log n) time and O(1) space.
+
+# Slower than previous solution but really low memory usage, 99.63rd percentile
+# class Solution:
+#     def singleNonDuplicate(self, nums: List[int]) -> int:
+#         start = 0
+#         end = len(nums) - 1
+#         # middle = 0
+#         while start < end:
+#             middle = start + ((end - start) // 2)
+#             if middle % 2 == 1:
+#                 if nums[middle] == nums[middle - 1]:
+#                     start = middle + 1
+#                     continue
+#                 elif nums[middle] != nums[middle + 1]: return nums[middle]
+#                 else:
+#                     end = middle
+#                     continue
+#             else:
+#                 if nums[middle] == nums[middle + 1]:
+#                     start = middle + 2
+#                     continue
+#                 elif nums[middle] != nums[middle - 1]: return nums[middle]
+#                 else:
+#                     end = middle
+#         return nums[start]
+
+# Somewhat faster, though uses slightly more memory than first solution.
+# Still 26.12th percentile for runtime
 class Solution:
     def singleNonDuplicate(self, nums: List[int]) -> int:
-        start = 0   # start, end, and middle rep indices in nums
+        start = 0
         end = len(nums) - 1
-        middle = -1
+        # middle = 0
         while start < end:
             middle = start + ((end - start) // 2)
-            if nums[middle] == nums[middle - 1]:
-                if (middle - 1 - start) % 2 == 1:
-                    end = middle - 2
-                else:
+            if middle % 2 == 1:
+                if nums[middle] == nums[middle - 1]:
                     start = middle + 1
-            elif nums[middle] == nums[middle + 1]:
-                if (middle - start) % 2 == 1:
-                    end = middle - 1
+                    continue
                 else:
-                    start = middle + 2
+                    end = middle
+                    continue
             else:
-                return nums[middle]
+                if nums[middle] == nums[middle + 1]:
+                    start = middle + 2
+                    continue
+                else:
+                    end = middle
         return nums[start]
+            
+
+# works okay, fairly slow and uses more memory than others' solutions
+# class Solution:
+#     def singleNonDuplicate(self, nums: List[int]) -> int:
+#         start = 0   # start, end, and middle rep indices in nums
+#         end = len(nums) - 1
+#         middle = -1
+#         while start < end:
+#             middle = start + ((end - start) // 2)
+#             if nums[middle] == nums[middle - 1]:
+#                 if (middle - 1 - start) % 2 == 1:
+#                     end = middle - 2
+#                 else:
+#                     start = middle + 1
+#             elif nums[middle] == nums[middle + 1]:
+#                 if (middle - start) % 2 == 1:
+#                     end = middle - 1
+#                 else:
+#                     start = middle + 2
+#             else:
+#                 return nums[middle]
+#         return nums[start]
