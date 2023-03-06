@@ -14,7 +14,8 @@
 # if s has letters before numbers, return 0?
 # ... according to testcases, yes, return 0 if s has letters before numbers
 
-# works, 27.79th percentile for runtime, 13.8th for memory
+# wrote in 2147483648 instead of 2^31, 94.8th percentile for runtime,
+# 98.24th for memory (...sometimes. I do think it's at least some amount better than prev sol)
 class Solution:
     def myAtoi(self, s: str) -> int:
         ret_num = 0
@@ -24,10 +25,10 @@ class Solution:
         for c in s:
             if c in digits:
                 ret_num = (ret_num * 10) + int(c)
-                if ret_num > 2 ** 31 and sign == -1:
-                    return (2 ** 31) * -1
-                elif ret_num > (2 ** 31) - 1 and sign == 1:
-                    return (2 ** 31) - 1
+                if ret_num > 2147483648 and sign == -1:
+                    return -2147483648
+                elif ret_num > 2147483647 and sign == 1:
+                    return 2147483647
                 num_started = True
                 continue
             elif num_started:
@@ -42,3 +43,32 @@ class Solution:
                 continue
             else: return ret_num * sign
         return ret_num * sign
+
+# works, 27.79th percentile for runtime, 13.8th for memory
+# class Solution:
+#     def myAtoi(self, s: str) -> int:
+#         ret_num = 0
+#         sign = 1    # 1 for positive, -1 for negative
+#         num_started = False
+#         digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+#         for c in s:
+#             if c in digits:
+#                 ret_num = (ret_num * 10) + int(c)
+#                 if ret_num > 2 ** 31 and sign == -1:
+#                     return (2 ** 31) * -1
+#                 elif ret_num > (2 ** 31) - 1 and sign == 1:
+#                     return (2 ** 31) - 1
+#                 num_started = True
+#                 continue
+#             elif num_started:
+#                 return ret_num * sign
+#             elif c == ' ': continue
+#             elif c == '-':
+#                 sign = -1
+#                 num_started = True
+#                 continue
+#             elif c == '+':
+#                 num_started = True
+#                 continue
+#             else: return ret_num * sign
+#         return ret_num * sign
