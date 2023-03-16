@@ -59,3 +59,67 @@ class Solution:
             for tr in to_remove: curr_l.remove(tr)
         if len(s) in curr_l: return True
         return False
+
+
+# Previous failed ideas:
+
+# going through s rather than p
+# class Solution:
+#     def isMatch(self, s: str, p: str) -> bool:
+#         curr_p = [0]
+#         for l in s: # check each letter in s
+#             curr_p_len = len(curr_p)
+#             to_remove = []
+#             for cp_in in range(curr_p_len):    # check each branching path of p possibilities
+#                 if curr_p[cp_in] >= len(p):  # if this path already finished p with letters of s left, remove path
+#                     curr_p.remove(curr_p[cp_in])
+#                     continue
+#                 if len(p) > curr_p[cp_in] + 1 and p[curr_p[cp_in] + 1] == '*': # case where * means zero
+#                     cp = curr_p[cp_in] + 1
+#                     while cp < len(p) and p[cp] == '*':
+#                         cp += 1
+#                     # now cp is the first index of p that is not a '*'
+#                     if cp < len(p) and (l == p[cp] or p[cp] == '.'):
+#                         curr_p.append(cp + 1)
+#                         print(cp + 1)
+#                 print(l, p[curr_p[cp_in]])
+#                 if l == p[curr_p[cp_in]] or p[curr_p[cp_in]] == '.':
+#                     curr_p[cp_in] += 1
+#                     continue
+#                 if p[curr_p[cp_in]] == '*':
+#                     print(p[curr_p[cp_in] - 1])
+#                     if l == p[curr_p[cp_in] - 1] or p[curr_p[cp_in] - 1] == '.':
+#                         curr_p.append(curr_p[cp_in] + 1)
+#                         continue
+#                 to_remove.append(curr_p[cp_in])
+#                 # curr_p.remove(curr_p[cp_in])    # if l didn't match path, remove possible pattern path
+#             for tr in to_remove:
+#                 curr_p.remove(tr)
+#         print(len(p), curr_p)
+#         if len(p) in curr_p: return True    # if reached end of s and one of the paths also completed p
+#         else: return False
+
+# didn't realize * could be zero
+# class Solution:
+#     def isMatch(self, s: str, p: str) -> bool:
+#         curr_p = [0]
+#         for l in s: # check each letter in s
+#             curr_p_len = len(curr_p)
+#             for cp_in in range(curr_p_len):    # check each branching path of p possibilities
+#                 if curr_p[cp_in] >= len(p):  # if this path already finished p with letters of s left, remove path
+#                     curr_p.remove(curr_p[cp_in])
+#                     continue
+#                 print(l, p[curr_p[cp_in]])
+#                 if l == p[curr_p[cp_in]] or p[curr_p[cp_in]] == '.':
+#                     curr_p[cp_in] += 1
+#                     continue
+#                 if p[curr_p[cp_in]] == '*':
+#                     print(p[curr_p[cp_in] - 1])
+#                     if l == p[curr_p[cp_in] - 1] or p[curr_p[cp_in] - 1] == '.':
+#                         curr_p.append(curr_p[cp_in] + 1)
+#                         continue
+#                     # cover case where "**"?
+#                 curr_p.remove(curr_p[cp_in])    # if l didn't match path, remove possible pattern path
+#         print(len(p), curr_p)
+#         if len(p) in curr_p: return True    # if reached end of s and one of the paths also completed p
+#         else: return False
